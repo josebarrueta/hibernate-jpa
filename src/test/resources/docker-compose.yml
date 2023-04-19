@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  signal_postgres:
+    container_name: test_db
+    hostname: test_db
+    image: postgres:14.7
+    environment:
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=@bcd1234$
+      - POSTGRES_DB=testdb
+    ports:
+      - "15432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d/
+    networks:
+      - infra_network
+
+networks:
+  infra_network:
+    external: false
+    name: "infra_network"
