@@ -24,7 +24,7 @@ public class TestEntityController {
 
     @GetMapping("/{id}")
     public TestEntity getTestEntity(@PathVariable String id) {
-        return null;
+        return testService.findEntity(id);
     }
 
     @PostMapping

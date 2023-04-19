@@ -9,17 +9,20 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"org.oss.tx.repositories"}, transactionManagerRef = "txManager")
 public class DbTransactionApplication {
 
+    static {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(DbTransactionApplication.class, args);
     }
-
-
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
@@ -28,4 +31,5 @@ public class DbTransactionApplication {
         transactionManager.setDataSource(dataSource);
         return transactionManager;
     }
+
 }

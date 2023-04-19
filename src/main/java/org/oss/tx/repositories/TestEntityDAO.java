@@ -9,7 +9,6 @@ public class TestEntityDAO {
 
     private final EntityManager entityManager;
 
-
     public TestEntityDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -20,7 +19,7 @@ public class TestEntityDAO {
     }
 
     public TestEntity findById(String id) {
-        return null;
+        return entityManager.find(TestEntity.class, id);
     }
 
 }

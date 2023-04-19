@@ -6,8 +6,6 @@ import org.oss.tx.repositories.TestEntityDAO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-
 @Service
 public class TestService {
 
@@ -21,8 +19,6 @@ public class TestService {
     @Transactional
     public TestEntity createEntity(String username, String password) {
         TestEntity testEntity = new TestEntity();
-
-        testEntity.setCreated(LocalDateTime.now());
 
         Credentials credentials = new Credentials();
         credentials.setUser(username);
