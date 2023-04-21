@@ -5,11 +5,11 @@ import org.oss.tx.dao.TestEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TestEntityDAO {
+public class TestEntityDao {
 
     private final EntityManager entityManager;
 
-    public TestEntityDAO(EntityManager entityManager) {
+    public TestEntityDao(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

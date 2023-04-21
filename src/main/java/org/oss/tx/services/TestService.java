@@ -2,16 +2,16 @@ package org.oss.tx.services;
 
 import org.oss.tx.dao.Credentials;
 import org.oss.tx.dao.TestEntity;
-import org.oss.tx.repositories.TestEntityDAO;
+import org.oss.tx.repositories.TestEntityDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TestService {
 
-    public final TestEntityDAO testEntityDAO;
+    public final TestEntityDao testEntityDAO;
 
-    public TestService(TestEntityDAO testEntityDAO) {
+    public TestService(TestEntityDao testEntityDAO) {
         this.testEntityDAO = testEntityDAO;
     }
 
