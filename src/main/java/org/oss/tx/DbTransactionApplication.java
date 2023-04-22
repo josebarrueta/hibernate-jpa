@@ -1,18 +1,18 @@
 package org.oss.tx;
 
-import org.hibernate.SessionFactory;
+import jakarta.persistence.EntityManagerFactory;
 import org.oss.tx.filters.TenantContextFilter;
 import org.oss.tx.listeners.TenantEntityListener;
+import org.oss.tx.listeners.TenantFilterEntityManagerConsumer;
 import org.oss.tx.services.TenantContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
 import java.util.TimeZone;
 
 @SpringBootApplication
@@ -28,12 +28,16 @@ public class DbTransactionApplication {
         SpringApplication.run(DbTransactionApplication.class, args);
     }
 
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
-    public HibernateTransactionManager txManager(SessionFactory sessionFactory, DataSource dataSource) {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
-        transactionManager.setDataSource(dataSource);
+    public JpaTransactionManager txManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory);
+        transactionManager.setEntityManagerInitializer(tenantFilterEntityManagerConsumer());
         return transactionManager;
+    }
+
+    @Bean
+    public TenantFilterEntityManagerConsumer tenantFilterEntityManagerConsumer() {
+        return new TenantFilterEntityManagerConsumer(tenantContext());
     }
 
     @Bean

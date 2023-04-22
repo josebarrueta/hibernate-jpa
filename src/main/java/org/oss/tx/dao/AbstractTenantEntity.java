@@ -4,11 +4,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.ParamDef;
 import org.oss.tx.listeners.TenantEntityListener;
 
+@FilterDef(name = "filterByTenantId", parameters = @ParamDef(name = "tenantId", type = String.class))
 @Filters({
-        @Filter(name = "filterByTenantId", condition = "tenant_id = :tenant_id")
+        @Filter(name = "filterByTenantId", condition = "tenantId = :tenantId")
 })
 @MappedSuperclass
 @EntityListeners(TenantEntityListener.class)
