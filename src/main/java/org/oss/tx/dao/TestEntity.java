@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Table(name = "test_entity")
 @Entity
-public class TestEntity extends AbstractUpdatableEntity implements EncryptedProperties<Credentials> {
+public class TestEntity extends AbstractTenantEntity implements EncryptedProperties<Credentials> {
 
     @Id
     @UuidGenerator(style = UuidGenerator.Style.TIME)
@@ -23,7 +23,6 @@ public class TestEntity extends AbstractUpdatableEntity implements EncryptedProp
 
     @Column(name = "created_at")
     private LocalDateTime created;
-
 
     @Column(name = "properties", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
