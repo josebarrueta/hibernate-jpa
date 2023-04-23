@@ -57,7 +57,7 @@ public class DbTransactionApplication {
         TenantContextFilter tenantContextFilter = new TenantContextFilter(tenantContext());
         FilterRegistrationBean<TenantContextFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(tenantContextFilter);
-        registrationBean.addUrlPatterns("/*");
+        registrationBean.addUrlPatterns("/testEntities/*");
         return registrationBean;
     }
 }

@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/testEntities")
 public class TestEntityController {
 
     private final TestService testService;
@@ -25,6 +26,11 @@ public class TestEntityController {
     @GetMapping("/{id}")
     public TestEntity getTestEntity(@PathVariable String id) {
         return testService.findEntity(id);
+    }
+
+    @GetMapping
+    public List<TestEntity> getTestEntities() {
+        return testService.findAll();
     }
 
     @PostMapping

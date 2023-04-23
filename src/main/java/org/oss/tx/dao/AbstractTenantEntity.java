@@ -11,7 +11,7 @@ import org.oss.tx.listeners.TenantEntityListener;
 
 @FilterDef(name = "filterByTenantId", parameters = @ParamDef(name = "tenantId", type = String.class))
 @Filters({
-        @Filter(name = "filterByTenantId", condition = "tenantId = :tenantId")
+        @Filter(name = "filterByTenantId", condition = "tenant_id = :tenantId")
 })
 @MappedSuperclass
 @EntityListeners(TenantEntityListener.class)
