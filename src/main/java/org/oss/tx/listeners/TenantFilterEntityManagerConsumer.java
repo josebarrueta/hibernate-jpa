@@ -16,8 +16,8 @@ public class TenantFilterEntityManagerConsumer implements Consumer<EntityManager
 
     @Override
     public void accept(EntityManager entityManager) {
+        Session session = entityManager.unwrap(Session.class);
         if (tenantContext.getTenantId() != null) {
-            Session session = entityManager.unwrap(Session.class);
             session.enableFilter("filterByTenantId").setParameter("tenantId", tenantContext.getTenantId());
         }
     }
