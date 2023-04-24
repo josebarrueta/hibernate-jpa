@@ -3,7 +3,7 @@ package org.oss.tx;
 import jakarta.persistence.EntityManagerFactory;
 import org.oss.tx.filters.TenantContextFilter;
 import org.oss.tx.listeners.TenantEntityListener;
-import org.oss.tx.listeners.TenantFilterEntityManagerConsumer;
+import org.oss.tx.repositories.TenantAwareJpaRepository;
 import org.oss.tx.services.TenantContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +17,7 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"org.oss.tx.repositories"}, transactionManagerRef = "txManager")
+@EnableJpaRepositories(basePackages = {"org.oss.tx.repositories"}, repositoryBaseClass = TenantAwareJpaRepository.class, transactionManagerRef = "txManager")
 public class DbTransactionApplication {
 
     static {
@@ -30,14 +30,7 @@ public class DbTransactionApplication {
 
     @Bean
     public JpaTransactionManager txManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager transactionManager = new JpaTransactionManager(entityManagerFactory);
-        transactionManager.setEntityManagerInitializer(tenantFilterEntityManagerConsumer());
-        return transactionManager;
-    }
-
-    @Bean
-    public TenantFilterEntityManagerConsumer tenantFilterEntityManagerConsumer() {
-        return new TenantFilterEntityManagerConsumer(tenantContext());
+        return new JpaTransactionManager(entityManagerFactory);
     }
 
     @Bean
