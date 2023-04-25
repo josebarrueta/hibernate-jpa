@@ -2,6 +2,8 @@ package org.oss.tx.dao;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -28,6 +30,10 @@ public class TestEntity extends AbstractTenantEntity implements EncryptedPropert
     @JdbcTypeCode(SqlTypes.JSON)
     private Credentials properties;
 
+    @Column
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
+
     @Override
     public Credentials getProperties() {
         return properties;
@@ -52,5 +58,17 @@ public class TestEntity extends AbstractTenantEntity implements EncryptedPropert
 
     public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public enum Status {
+        ACTIVE, SUSPENDED, DELETED
     }
 }

@@ -4,6 +4,7 @@ import org.oss.tx.dao.Credentials;
 import org.oss.tx.dao.TestEntity;
 import org.oss.tx.exception.ResourceNotFoundException;
 import org.oss.tx.repositories.TestEntityRepository;
+import org.oss.tx.specifications.TestEntitySpecifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,7 @@ public class TestService {
         credentials.setPassword(password);
 
         testEntity.setProperties(credentials);
+        testEntity.setStatus(TestEntity.Status.ACTIVE);
         return testEntityRepository.save(testEntity);
     }
 
@@ -41,7 +43,7 @@ public class TestService {
     }
 
     public List<TestEntity> findAll() {
-        Iterable<TestEntity> testEntities = testEntityRepository.findAll();
+        Iterable<TestEntity> testEntities = testEntityRepository.findAll(TestEntitySpecifications.testEntityIsActive());
         List<TestEntity> result = new ArrayList<>();
         testEntities.forEach(result::add);
         return result;
