@@ -12,8 +12,6 @@ import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
 import org.oss.tx.encryption.EncryptedProperties;
 
-import java.time.LocalDateTime;
-
 @Table(name = "test_entity")
 @Entity
 public class TestEntity extends AbstractTenantEntity implements EncryptedProperties<Credentials> {
@@ -22,9 +20,6 @@ public class TestEntity extends AbstractTenantEntity implements EncryptedPropert
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     @GeneratedValue
     private String id;
-
-    @Column(name = "created_at")
-    private LocalDateTime created;
 
     @Column(name = "properties", columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
@@ -50,14 +45,6 @@ public class TestEntity extends AbstractTenantEntity implements EncryptedPropert
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
     }
 
     public Status getStatus() {

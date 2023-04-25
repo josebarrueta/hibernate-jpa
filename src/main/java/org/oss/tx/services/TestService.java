@@ -4,7 +4,7 @@ import org.oss.tx.dao.Credentials;
 import org.oss.tx.dao.TestEntity;
 import org.oss.tx.exception.ResourceNotFoundException;
 import org.oss.tx.repositories.TestEntityRepository;
-import org.oss.tx.specifications.TestEntitySpecifications;
+import org.oss.tx.repositories.TestEntityRepository.Specs;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +35,7 @@ public class TestService {
     }
 
     public TestEntity findEntity(String entityId) {
-        Optional<TestEntity> testEntity = testEntityRepository.findById(entityId);
+        Optional<TestEntity> testEntity = testEntityRepository.findOne(Specs.testEntityByIdAndStatus(entityId, TestEntity.Status.ACTIVE));
         if (testEntity.isEmpty()) {
             throw new ResourceNotFoundException(TestEntity.class, entityId);
         }
@@ -43,7 +43,7 @@ public class TestService {
     }
 
     public List<TestEntity> findAll() {
-        Iterable<TestEntity> testEntities = testEntityRepository.findAll(TestEntitySpecifications.testEntityIsActive());
+        Iterable<TestEntity> testEntities = testEntityRepository.findAll(Specs.testEntityIsActive());
         List<TestEntity> result = new ArrayList<>();
         testEntities.forEach(result::add);
         return result;
