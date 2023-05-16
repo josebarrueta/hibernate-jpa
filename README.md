@@ -8,3 +8,4 @@ This project is meant as a sample project for Spring Boot with Hibernate 6 and T
 1. Clone the project
 2. Run `mvn clean install`
 3. Run `mvn spring-boot:run`
+4. Open `http://localhost:8082/` in your browser
